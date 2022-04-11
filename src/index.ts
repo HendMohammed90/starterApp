@@ -4,7 +4,7 @@ import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 import errorMiddleware from './middleware/error.middleware'
 import config from './config'
-
+import client from './database/index'
 
 const PORT = config.port || 3000
 // create an instance server
@@ -27,11 +27,20 @@ app.use(
 )
 
 // Add routing for main Path
-app.get('/', (req: Request, res: Response) => {
+app.get('/', async (req: Request, res: Response) => {
   // throw new Error('There is an error here')
-  res.json({
-    message: 'Hello World 🌍',
-  })
+  // res.json({
+  //   message: 'Hello World 🌍',
+  // })
+  try {
+    const connection = await client.connect() // Create a new connection to the database
+    const query = 'SELECT NOW();' // Create a query to select all data
+    const results = await connection.query(query) // Execute the query
+    connection.release() // Release the connection
+    res.send(results.rows) // Send the results
+  } catch (error) {
+    throw new Error(`Could not get users. Error: ${error}`)
+  }
 })
 
 // error handler middleware
@@ -60,4 +69,4 @@ export default app
 // mohammedelzanaty <mohammedelzanaty129@gmail.com>
 // https://github.com/mohammedelzanaty/express-api-typescript-jasmine.git
 // express-api-typescript-jasmine
-// starterApp/src
+// starterApp/src ---- / * FROM article
