@@ -7,7 +7,7 @@ const pool = new Pool({
   user: config.user,
   password: '',
   // port: parseInt(config.port as string, 10),
-  max: 4
+  // max: 4
 })
 
 pool.on('error', (error: Error) => {
