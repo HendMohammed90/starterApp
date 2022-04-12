@@ -20,7 +20,6 @@ export default {
   testDatabase :POSTGRES_TEST_DB ,
   user :POSTGRES_USER ,
   env :ENV ,
-  pass : BCRYPT_PASSWORD  ,
+  pepper : BCRYPT_PASSWORD  ,
   salt :SALT_ROUNDS
-
 }

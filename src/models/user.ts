@@ -1,5 +1,13 @@
 import { User } from '../types/user.type'
 import client from '../database/index'
+import bcrypt from 'bcrypt';
+import config  from '../config';
+
+const hashPass = (pass: string) => {
+    const salt = parseInt(config.salt as string, 10)
+    return bcrypt.hashSync(`${pass}${config.pepper}`, salt)
+  }
+  
 
 export class UsersClass {
     async index(): Promise<User[]> {
@@ -51,11 +59,11 @@ export class UsersClass {
             // Create a query to select all data
             const sql =
                 'INSERT INTO users (first_name, last_name ,password) VALUES($1, $2, $3) RETURNING id ,first_name , last_name '
-            // Execute the query
+                // Execute the query
             const result = await connection.query(sql, [
                 user.first_name,
                 user.last_name,
-                user.password,
+                hashPass(user.password)
             ])
             connection.release() // Release the connection
 
