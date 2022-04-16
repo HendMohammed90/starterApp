@@ -11,6 +11,7 @@ const {
   ENV,
   BCRYPT_PASSWORD,
   SALT_ROUNDS,
+  TOKEN
 } = process.env
 
 export default {
@@ -21,5 +22,6 @@ export default {
   user :POSTGRES_USER ,
   env :ENV ,
   pepper : BCRYPT_PASSWORD  ,
-  salt :SALT_ROUNDS
+  salt :SALT_ROUNDS,
+  token : TOKEN
 }

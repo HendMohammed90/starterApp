@@ -16,6 +16,7 @@ const app: Application = express()
 app.use(morgan('dev'))
 // HTTP security middleware headers
 app.use(helmet())
+
 // Basic rate-limiting middleware for Express
 // Apply the rate limiting middleware to all requests
 // app.use(
@@ -68,15 +69,3 @@ app.listen(PORT, () => {
   console.log(`Server is starting at prot:${PORT}`)
 })
 export default app
-
-// "dev": "nodemon src/index.ts",
-// "build": "tsc",
-// "start": "npm run build && node dist/index.js",
-// "format": "prettier --write src/**/*.ts",
-// "test": "npm run build && jasmine",
-// "lint": "eslint src/**/*.ts",
-// "lint:fix": "eslint --fix"
-// mohammedelzanaty <mohammedelzanaty129@gmail.com>
-// https://github.com/mohammedelzanaty/express-api-typescript-jasmine.git
-// express-api-typescript-jasmine
-// starterApp/src ---- / * FROM article

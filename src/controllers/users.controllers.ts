@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import UsersClass from '../models/user';
+import UsersClass from '../models/userModel';
+import jwt from 'jsonwebtoken'
+import config from '../config'
+
 
 const userModel = new UsersClass()
 
@@ -23,7 +26,7 @@ export const create = async (
 
 
 export const index = async (
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
@@ -55,6 +58,32 @@ export const getOne = async (
         })
     } catch (err) {
         next(err)
+    }
+}
+
+export const auth = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { first_name, password } = req.body
+        // console.log(req.body);
+        const user = await userModel.authenticate(first_name, password)
+        const token = jwt.sign({ user }, config.token as unknown as string)
+        if (!user) {
+            return res.status(401).json({
+                status: 'error',
+                message: 'the first_name and password do not match please try again',
+            })
+        }
+        return res.json({
+            status: 'success',
+            data: { ...user, token },
+            message: 'user authenticated successfully',
+        })
+    } catch (err) {
+        return next(err)
     }
 }
 

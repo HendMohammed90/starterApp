@@ -13,11 +13,14 @@
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "npm run build && jasmine",
+    "tests": "ENV=test db-migrate up --ENV test && tsc && jasmine && db-migrate reset",
+    "tests:windows": "set ENV=test db-migrate up --env test && tsc && jasmine && db-migrate reset",
     "migrate": "db-migrate up"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/jasmine": "^3.10.2",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
     "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.11",
@@ -44,6 +47,7 @@
     "express": "^4.17.2",
     "express-rate-limit": "^6.0.1",
     "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.7.3"
   }
